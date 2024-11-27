@@ -25,5 +25,5 @@ app.post("/", (req, res) => {
   logs.sensor_no = sensor_no;
   logs.water_level = water_level;
   AppDataSource.getRepository(Logs).save(logs);
-  res.send("Data saved!");
+  return res.status(201).send("Data saved");
 });
