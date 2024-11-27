@@ -3,6 +3,14 @@ import { host } from "./config/database";
 import { AppDataSource } from "./data-source";
 import * as express from "express";
 import { Logs } from "./entity/Logs";
+import * as line from "@line/bot-sdk";
+
+export const lineClient = new line.messagingApi.MessagingApiClient({
+  channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
+});
+line.middleware({
+  channelSecret: process.env.CHANNEL_SECRET,
+});
 
 const app = express();
 app.use(express.json());
