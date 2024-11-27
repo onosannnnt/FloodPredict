@@ -4,6 +4,7 @@ import { AppDataSource } from "./data-source";
 import * as express from "express";
 import { Logs } from "./entity/Logs";
 import * as line from "@line/bot-sdk";
+import { sendLineMessage } from "./libs/lineMessagine";
 
 export const lineClient = new line.messagingApi.MessagingApiClient({
   channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
@@ -33,5 +34,11 @@ app.post("/", (req, res) => {
   logs.sensor_no = sensor_no;
   logs.water_level = water_level;
   AppDataSource.getRepository(Logs).save(logs);
+  if (water_level < 10) {
+    sendLineMessage(
+      "Ufd79c6344c9a97376eb756961a7830af",
+      `Sensor ${sensor_no} detected water level ${water_level}`
+    );
+  }
   return res.status(201).send("Data saved");
 });
