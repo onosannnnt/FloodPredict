@@ -11,14 +11,10 @@ import {
 
 export const AppDataSource = new DataSource({
   type: "postgres",
-  host: host,
-  port: dbPort,
-  username: dbUser,
-  password: dbPassword,
-  database: dbName,
+  url: databaseUrl,
   synchronize: true,
   logging: false,
-  entities: ["src/models/**/*.ts"],
-  // migrations: ['src/migration/**/*.ts'],
+  entities: ["src/entity/**/*.ts"],
+  migrations: [],
   subscribers: [],
 });
