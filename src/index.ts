@@ -15,7 +15,7 @@ line.middleware({
   channelSecret: process.env.CHANNEL_SECRET,
 });
 
-let sensor = [0, 0, 0, 0];
+let sensor_value = [0, 0, 0, 0];
 let humidity_value = [0, 0];
 
 const app = express();
@@ -23,7 +23,7 @@ const server = new WebSocket.Server({ port: 8080 });
 app.use(express.json());
 
 server.on("connection", (websocket) => {
-  websocket.send(JSON.stringify(sensor));
+  websocket.send(JSON.stringify(sensor_value));
   websocket.on("message", (message) => {
     console.log(`Received message: ${message}`);
     server.clients.forEach((client) => {
@@ -31,7 +31,7 @@ server.on("connection", (websocket) => {
         client.send(message);
       }
     });
-    websocket.send(JSON.stringify(sensor));
+    websocket.send(JSON.stringify(sensor_value));
   });
 
   websocket.on("close", () => {
@@ -53,7 +53,7 @@ app.get("/", (req: express.Request, res: express.Response) => {
 
 app.post("/", (req, res) => {
   const { water_level, sensor_no } = req.body;
-  sensor[sensor_no] = water_level;
+  sensor_value[sensor_no] = water_level;
   const logs = new Logs();
   logs.sensor_no = sensor_no;
   logs.water_level = water_level;
@@ -67,7 +67,7 @@ app.post("/", (req, res) => {
         humidity_value[1]
       } เซลเซียส`
     );
-  } else if (water_level < 10) {
+  } else if (water_level < 7) {
     sendLineMessage(
       "Ufd79c6344c9a97376eb756961a7830af",
       `📢 แจ้งเตือนภัยน้ำท่วม: โปรดระมัดระวัง ⚠️🌊\nระดับน้ำ: ${
