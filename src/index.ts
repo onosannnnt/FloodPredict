@@ -6,6 +6,7 @@ import { Logs } from "./entity/Logs";
 import { Humidity } from "./entity/humidity";
 import * as line from "@line/bot-sdk";
 import { sendLineMessage } from "./libs/lineMessagine";
+import * as WebSocket from "ws";
 
 export const lineClient = new line.messagingApi.MessagingApiClient({
   channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
@@ -17,7 +18,25 @@ line.middleware({
 const sensor = [0, 0, 0, 0];
 
 const app = express();
-const is = app.use(express.json());
+const server = new WebSocket.Server({ port: 8080 });
+app.use(express.json());
+
+server.on("connection", (websocket) => {
+  websocket.send(JSON.stringify(sensor));
+  websocket.on("message", (message) => {
+    console.log(`Received message: ${message}`);
+    server.clients.forEach((client) => {
+      if (client !== websocket && client.readyState === WebSocket.OPEN) {
+        client.send(message);
+      }
+    });
+    websocket.send(JSON.stringify(sensor));
+  });
+
+  websocket.on("close", () => {
+    console.log("Client disconnected");
+  });
+});
 
 AppDataSource.initialize()
   .then(async () => {
