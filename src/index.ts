@@ -52,6 +52,7 @@ app.post("/humidity", (req, res) => {
   const logs = new humidity();
   logs.humidity = humidity;
   logs.temperature = temperature;
+  AppDataSource.getRepository(Logs).save(logs);
   if (humidity > 80) {
     sendLineMessage(
       "Ufd79c6344c9a97376eb756961a7830af",
