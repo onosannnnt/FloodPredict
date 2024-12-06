@@ -48,10 +48,10 @@ app.post("/", (req, res) => {
 });
 
 app.post("/humidity", (req, res) => {
-  const { humidity } = req.body;
+  const { humidity, temperature } = req.body;
   const logs = new humidity();
-  logs.sensor_no = "humidity";
-  logs.water_level = humidity;
+  logs.humidity = humidity;
+  logs.temperature = temperature;
   if (humidity > 80) {
     sendLineMessage(
       "Ufd79c6344c9a97376eb756961a7830af",
