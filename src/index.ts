@@ -49,7 +49,7 @@ app.post("/", (req, res) => {
 
 app.post("/humidity", (req, res) => {
   const { humidity, temperature } = req.body;
-  const logs = new humidity();
+  const logs = new Humidity();
   logs.humidity = humidity;
   logs.temperature = temperature;
   AppDataSource.getRepository(humidity).save(logs);
