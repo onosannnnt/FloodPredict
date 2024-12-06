@@ -60,7 +60,12 @@ app.post("/", (req, res) => {
   if (water_level < 10) {
     sendLineMessage(
       "Ufd79c6344c9a97376eb756961a7830af",
-      `Sensor ${sensor_no} detected water at ${water_level} cm`
+      `📢 แจ้งเตือนภัยน้ำท่วม: โปรดระมัดระวัง ⚠️🌊`
+    );
+  } else if (water_level < 5) {
+    sendLineMessage(
+      "Ufd79c6344c9a97376eb756961a7830af",
+      `📢 แจ้งเตือนภัยน้ำท่วมขั้นวิกฤติ! 🚨`
     );
   }
   return res.status(201).send("Data saved");
@@ -75,7 +80,8 @@ app.post("/humidity", (req, res) => {
   if (humidity > 80) {
     sendLineMessage(
       "Ufd79c6344c9a97376eb756961a7830af",
-      `Humidity detected ${humidity}`
+      `
+      📢 แจ้งเตือนฝนตก: โปรดเก็บผ้าด้วย 🌧️`
     );
   }
   return res.status(201).send("Data saved");
