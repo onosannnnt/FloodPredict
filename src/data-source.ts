@@ -12,7 +12,7 @@ import {
 export const AppDataSource = new DataSource({
   type: "postgres",
   url: databaseUrl,
-  synchronize: false,
+  synchronize: true,
   logging: false,
   entities: ["src/entity/**/*.ts"],
   migrations: [],
