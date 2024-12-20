@@ -1,11 +1,29 @@
 # Flood Prediction IoT Project
 
+## Overview
+
+This project aims to predict potential flood risks using an IoT-based approach. The system integrates ESP8266 microcontroller with ultrasonic and humidity sensors to monitor real-time environmental conditions. The ultrasonic sensor measures water levels, while the humidity sensor tracks atmospheric moisture. Data is transmitted to a backend server for analysis, enabling predictive alerts and risk assessments.
+
 ## Steps to Run ESP8266
 
 ### Set up ESP8266
 
 1. Connect the computer to ESP8266.
-2. Install the ESP8266 package dependencies.
+2. Install the ESP8266 package dependencies:
+   - Open the Arduino IDE.
+   - Go to `File > Preferences`.
+   - Add the following URL to the "Additional Boards Manager URLs" field:
+     ```
+     https://arduino.esp8266.com/stable/package_esp8266com_index.json
+     ```
+   - Click `OK`.
+   - Go to `Tools > Board > Boards Manager`.
+   - Search for `ESP8266` and install the package.
+   - Ensure the following libraries are installed via `Tools > Manage Libraries`:
+     - `ESP8266WiFi` for Wi-Fi connectivity.
+     - `DHT` for the humidity sensor.
+     - `Ultrasonic` for handling the ultrasonic sensor.
+     - `ArduinoJson` for parsing and creating JSON objects.
 3. Open the `main.ino` file.
 4. Change the Wi-Fi SSID and password.
 5. Update the backend URL.

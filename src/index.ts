@@ -58,7 +58,9 @@ app.post("/", (req, res) => {
   logs.sensor_no = sensor_no;
   logs.water_level = water_level;
   AppDataSource.getRepository(Logs).save(logs);
-  if (water_level <= 5) {
+  if (water_level <= 0) {
+    return;
+  } else if (water_level <= 5) {
     sendLineMessage(
       "Ufd79c6344c9a97376eb756961a7830af",
       `📢 แจ้งเตือนภัยน้ำท่วมขั้นวิกฤติ! 🚨\nระดับน้ำ: ${
